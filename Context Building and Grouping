@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	exclude-result-prefixes="#all"
+	version="3.0">
+    <xsl:output method="xml" indent="yes" />
+    <xsl:template match="/">
+        <root>
+            <xsl:for-each-group select="//A_MatlStkInAcctMod/A_MatlStkInAcctModType" group-by="Material">
+                <xsl:for-each-group select="current-group()" group-by="Plant">
+                    <xsl:for-each-group select="current-group()" group-by="StorageLocation">
+                        <xsl:for-each-group select="current-group()" group-by="Batch">
+                            <record>
+                                <Material>
+                                    <xsl:value-of select="Material" />
+                                </Material>
+                                <Plant>
+                                    <xsl:value-of select="Plant" />
+                                </Plant>
+                                <StorageLocation>
+                                    <xsl:value-of select="StorageLocation" />
+                                </StorageLocation>
+                                <Batch>
+                                    <xsl:value-of select="Batch" />
+                                </Batch>
+                                <MaterialBaseUnit>
+                                    <xsl:value-of select="MaterialBaseUnit"/>
+                                </MaterialBaseUnit>
+                                <xsl:for-each select="current-group()">
+                                    <xsl:if test="InventoryStockType = 01">
+                                        <UnrestrictedQty>
+                                            <InventorySpecialStockType>
+                                                <xsl:value-of select="InventorySpecialStockType"/>
+                                            </InventorySpecialStockType>
+                                            <InventoryStockType>
+                                                <xsl:value-of select="InventoryStockType"/>
+                                            </InventoryStockType>
+                                            <MatlWrhsStkQtyInMatlBaseUnit>
+                                                <xsl:value-of select="MatlWrhsStkQtyInMatlBaseUnit"/>
+                                            </MatlWrhsStkQtyInMatlBaseUnit>
+                                        </UnrestrictedQty>
+                                    </xsl:if>
+                                    <xsl:if test="InventoryStockType = 02">
+                                        <OnHoldQty>
+                                            <InventorySpecialStockType>
+                                                <xsl:value-of select="InventorySpecialStockType"/>
+                                            </InventorySpecialStockType>
+                                            <InventoryStockType>
+                                                <xsl:value-of select="InventoryStockType"/>
+                                            </InventoryStockType>
+                                            <MatlWrhsStkQtyInMatlBaseUnit>
+                                                <xsl:value-of select="MatlWrhsStkQtyInMatlBaseUnit"/>
+                                            </MatlWrhsStkQtyInMatlBaseUnit>
+                                        </OnHoldQty>
+                                    </xsl:if>
+                                    <xsl:if test="InventoryStockType = 07">
+                                        <BlockedQty>
+                                            <InventorySpecialStockType>
+                                                <xsl:value-of select="InventorySpecialStockType"/>
+                                            </InventorySpecialStockType>
+                                            <InventoryStockType>
+                                                <xsl:value-of select="InventoryStockType"/>
+                                            </InventoryStockType>
+                                            <MatlWrhsStkQtyInMatlBaseUnit>
+                                                <xsl:value-of select="MatlWrhsStkQtyInMatlBaseUnit"/>
+                                            </MatlWrhsStkQtyInMatlBaseUnit>
+                                        </BlockedQty>
+                                    </xsl:if>
+                                    <xsl:if test="InventoryStockType = 08">
+                                        <RestrictedQty>
+                                            <InventorySpecialStockType>
+                                                <xsl:value-of select="InventorySpecialStockType"/>
+                                            </InventorySpecialStockType>
+                                            <InventoryStockType>
+                                                <xsl:value-of select="InventoryStockType"/>
+                                            </InventoryStockType>
+                                            <MatlWrhsStkQtyInMatlBaseUnit>
+                                                <xsl:value-of select="MatlWrhsStkQtyInMatlBaseUnit"/>
+                                            </MatlWrhsStkQtyInMatlBaseUnit>
+                                        </RestrictedQty>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </record>
+                        </xsl:for-each-group>
+                    </xsl:for-each-group>
+                </xsl:for-each-group>
+            </xsl:for-each-group>
+        </root>
+    </xsl:template>
+</xsl:stylesheet>
