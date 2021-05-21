@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.i2.com/cis">
+    	<xsl:template match="/">
+		<!-- TODO: Auto-generated template -->
+		<ns1:processLoadConfirm>
+		  <xsl:for-each-group select="A_OutbDeliveryHeader/A_OutbDeliveryHeaderType" group-by="YY1_Field1">
+		        <xsl:if test="not(current-group()/OverallGoodsMovementStatus='A')">
+		              <ns1:LoadConfirmData>
+	                    <ns1:SystemLoadID><xsl:value-of select="current-group()/YY1_Field1"/></ns1:SystemLoadID>
+	                    <ns1:ShipConfirmDateTime><xsl:value-of select="current-group()/ActualGoodsMovementDate"/></ns1:ShipConfirmDateTime>
+	                    <ns1:SECInformation>
+	                        <ns1:SealNumber><xsl:value-of select="current-group()/YY1_Field2"/></ns1:SealNumber>
+	                    </ns1:SECInformation>
+                      </ns1:LoadConfirmData>
+		        </xsl:if>
+		  </xsl:for-each-group>
+        </ns1:processLoadConfirm>
+	</xsl:template>
+</xsl:stylesheet>
